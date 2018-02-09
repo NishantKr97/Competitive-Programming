@@ -1,0 +1,1 @@
+This directory is for competitive question from Hackerrank.
