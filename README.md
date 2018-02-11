@@ -1,2 +1,2 @@
 # Competitive-Programming
-This repository is for competitive programming questions.
+This repository is for competitive programming question.
