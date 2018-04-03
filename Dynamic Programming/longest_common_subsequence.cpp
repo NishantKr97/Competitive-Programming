@@ -14,7 +14,7 @@ int subseq(string a, int l1, string b, int l2, int count)
     if(a[l1-1] == b[l2-1])
     {
         //c.append(a, l1, 1);
-        cout<<a[l1-1]<<endl;
+        //cout<<a[l1-1]<<endl;
          count++;
          val = l1-1;
          l1--;
@@ -66,7 +66,47 @@ void solveBy2DArray(string a, string b)
     int u,v,i,j;
     u = a.length();
     v = b.length();
-    int s[u][v] = {0};
+    int s[u][v];
+
+    for(i=0;i<=u;i++)
+    {
+        for(j=0;j<=v;j++)
+        {
+            s[i][j] = 0;
+        }
+    }
+
+
+    int mark;
+    for(i=u;i>0;i--)
+    {
+        for(j=v-1;j>=0;j--)
+        {
+            if(a[i-1] == b[j])
+            {
+                 if(i == u)
+                    s[i][j]++;
+                 else
+                 {
+                     s[i][j] = max(s[i+1][j+1], s[i][j+1])+1;
+                 }
+                i--;
+            }
+            else
+            {
+                s[i][j] = max(s[i+1][j+1], s[i][j+1]);
+            }
+        }
+    }
+
+    for(i=0;i<=u;i++)
+    {
+        for(j=0;j<=v;j++)
+        {
+            cout<<s[i][j]<<" ";
+        }
+        cout<<endl;
+    }
 
 }
 
@@ -89,8 +129,8 @@ int main()
         s[s.length()-i-1] = s[i];
         s[i] = temp;
     }
-    cout<<endl<<s;
+    cout<<endl<<s<<endl;;
 
-    //solveBy2DArray(a, b);
+    solveBy2DArray(a, b);
 
 }
