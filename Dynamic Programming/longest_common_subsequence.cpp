@@ -61,7 +61,7 @@ string subSeqStr(string a, int l1, string b, int l2, string c)
 
 }
 
-void solveBy2DArray(string a, string b)
+/*void solveBy2DArray(string a, string b)
 {
     int u,v,i,j;
     u = a.length();
@@ -76,7 +76,7 @@ void solveBy2DArray(string a, string b)
         }
     }
 
-
+    string x = "";
     int mark;
     for(i=u;i>0;i--)
     {
@@ -91,6 +91,8 @@ void solveBy2DArray(string a, string b)
                      s[i][j] = max(s[i+1][j+1], s[i][j+1])+1;
                  }
                 i--;
+
+                x.append(b, j, 1);
             }
             else
             {
@@ -108,8 +110,17 @@ void solveBy2DArray(string a, string b)
         cout<<endl;
     }
 
-}
+     for(int i=0;i<x.length()/2;i++)
+    {
+        char temp = x[x.length()-i-1];
+        x[x.length()-i-1] = x[i];
+        x[i] = temp;
+    }
 
+    cout<<x;
+
+}
+*/
 
 int main()
 {
@@ -131,6 +142,6 @@ int main()
     }
     cout<<endl<<s<<endl;;
 
-    solveBy2DArray(a, b);
+   //solveBy2DArray(a, b);
 
 }
