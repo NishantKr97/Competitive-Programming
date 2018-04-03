@@ -3,16 +3,6 @@ using namespace std;
 
 int dist(int* a, int k, int v)
 {
-
-    /*for(int i=0;i<v;i++)
-    {
-        for(int j=0;j<v;j++)
-        {
-            cout<<*((a + i*v) + j)<<" ";
-        }
-        cout<<endl;
-    }*/
-    //cout<<k<<" ";
     if(k == 0)
         return 0;
     int min = 100000;
@@ -27,8 +17,6 @@ int dist(int* a, int k, int v)
                 {
                      min = d;
                 }
-
-
         }
     }
 
@@ -62,19 +50,7 @@ int main()
             int x, y, z;
             cin>>x>>y>>z;
             a[x][y] = z;
-            //a[y][x] = z;
         }
-
-
-        /*for(i=0;i<v;i++)
-        {
-            for(j=0;j<v;j++)
-                cout<<a[i][j]<<" ";
-            cout<<endl;
-        }*/
-
-
-
 
         int k;
         cout<<"Enter the sink vertex : ";
