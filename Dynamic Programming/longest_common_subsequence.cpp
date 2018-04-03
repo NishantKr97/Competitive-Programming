@@ -34,7 +34,6 @@ string subSeqStr(string a, int l1, string b, int l2, string c)
 {
    if(l1 == 0 && l2 == 0)
     {
-        c.append(a, l1,1);
          return c;
     }
 
@@ -46,7 +45,7 @@ string subSeqStr(string a, int l1, string b, int l2, string c)
 
     if(a[l1-1] == b[l2-1])
     {
-        c.append(a, l1,1);
+         c.append(a, l1-1,1);
         //cout<<c<<endl;
          val = l1-1;
          l1--;
@@ -84,7 +83,6 @@ int main()
     int k = subseq(a, a.length(), b, b.length(), count);
     cout<<k;
     string s = subSeqStr(a, a.length(), b, b.length(),p);
-    cout<<endl<<s;
     for(int i=0;i<s.length()/2;i++)
     {
         char temp = s[s.length()-i-1];
