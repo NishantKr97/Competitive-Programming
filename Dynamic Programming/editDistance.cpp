@@ -16,7 +16,6 @@ int  solveByRec(string a, int l1, string b, int l2)
     {
         return 1 + min(min(solveByRec(a, l1, b, l2-1), solveByRec(a, l1-1, b, l2)), solveByRec(a, l1-1, a, l2-1));
     }
-
 }
 
 int solveBy2DArray(string a, string b)
@@ -41,7 +40,6 @@ int solveBy2DArray(string a, string b)
         }
     }
 
-
    for(i=0;i<=m;i++)
     {
         for(j=0;j<=n;j++)
@@ -52,7 +50,6 @@ int solveBy2DArray(string a, string b)
     }
 
     return arr[m][n];
-
 }
 
 int main()
@@ -62,8 +59,8 @@ int main()
     cin>>a;
     cout<<"Enter string B : ";
     cin>>b;
-    //int r1 = solveByRec(a, a.length(), b, b.length());
-    //cout<<r1<<endl;
+    int r1 = solveByRec(a, a.length(), b, b.length());
+    cout<<r1<<endl;
 
     int r2 = solveBy2DArray(a, b);
     cout<<endl<<r2;
