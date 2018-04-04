@@ -61,7 +61,7 @@ string subSeqStr(string a, int l1, string b, int l2, string c)
 
 }
 
-/*void solveBy2DArray(string a, string b)
+void solveBy2DArray(string a, string b)
 {
     int u,v,i,j;
     u = a.length();
@@ -120,7 +120,7 @@ string subSeqStr(string a, int l1, string b, int l2, string c)
     cout<<x;
 
 }
-*/
+
 
 int main()
 {
