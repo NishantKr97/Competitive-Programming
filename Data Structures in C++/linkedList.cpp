@@ -106,11 +106,74 @@ class LinkedList
 
         void swapNodes(int x, int y)
         {
-            Node* ptr1;
-            Node* ptr2;
-            ptr1 = ptr2 = head;
+            Node* ptrX_prev = new Node;
+            Node* ptrX_curr = new Node;
+            Node* ptrY_prev  = new Node;
+            Node* ptrY_curr = new Node;
+            ptrX_curr = head;
+            ptrY_curr = head;
+            ptrX_prev = NULL;
+            ptrY_prev = NULL;
 
-            while()
+           while(ptrX_curr && ptrX_curr->value != x)
+           {
+               ptrX_prev = ptrX_curr;
+               ptrX_curr = ptrX_curr->next;
+           }
+
+           while(ptrY_curr && ptrY_curr->value != y)
+           {
+               ptrY_prev = ptrY_curr;
+               ptrY_curr = ptrY_curr->next;
+           }
+
+           if(ptrX_curr == NULL || ptrY_curr == NULL)
+           {
+               cout<<"Enter valid swapping values!!!\n";
+               return;
+           }
+
+
+           if(ptrX_prev != NULL)
+               ptrX_prev->next = ptrY_curr;
+           else
+               head = ptrY_curr;
+
+           if(ptrY_prev != NULL)
+               ptrY_prev->next = ptrX_curr;
+           else
+               head = ptrX_curr;
+
+            Node* temp = ptrX_curr->next;
+            ptrX_curr->next = ptrY_curr->next;
+            ptrY_curr->next = temp;
+
+        }
+
+        void deleteHead()
+        {
+            free(head);
+        }
+
+        void reverseLinkedList()
+        {
+            Node* prev = new Node;
+            Node* curr = new Node;
+            Node* Next = new Node;
+
+            prev = NULL;
+            curr = head;
+
+            while(Next != NULL)
+            {
+               Next = curr->next;
+               curr->next = prev;
+               prev = curr;
+               curr = Next;
+            }
+
+            head = prev;
+
         }
 };
 
@@ -128,15 +191,17 @@ int main()
         a->insertAtIndex(1, 6);
         a->printLinkedList();
 
+        a->swapNodes(1,6);
+        a->printLinkedList();
+
         int s = a->lengthOfList(a->head, 0);
         cout<<"Size of the List : "<<s<<endl;
 
         a->deleteAtIndex(2);
         a->printLinkedList();
 
-        a->deleteAtIndex(1);
+        a->reverseLinkedList();
         a->printLinkedList();
 
-        s = a->lengthOfList(a->head, 0);
-        cout<<"Size of the List : "<<s<<endl;
+
 }
