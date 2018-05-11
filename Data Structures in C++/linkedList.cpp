@@ -6,6 +6,7 @@ class Node
     public :
         int value;
         Node* next;
+        int visitedFlag;
 };
 
 class LinkedList
@@ -175,6 +176,93 @@ class LinkedList
             head = prev;
 
         }
+
+        int printReverse(Node* temp)
+        {
+            if(temp->next == NULL)
+            {
+                cout<<temp->value<<" ";
+                return 0;
+            }
+            int k = printReverse(temp->next);
+            cout<<temp->value<<" ";
+        }
+
+        void intersectSortedLinkedList(Node* ptrA, Node* ptrB, LinkedList* z)
+        {
+            if(ptrA == NULL || ptrB == NULL)
+                return;
+
+            if(ptrA->value == ptrB->value)
+                z->insertAtHead(ptrA->value);
+            else if(ptrA->value < ptrB->value)
+                ptrA = ptrA->next;
+            else
+                ptrB = ptrB->next;
+         }
+
+         void deleteNodeOnRight()
+         {
+             this->reverseLinkedList();
+             Node* curr = new Node;
+             curr = this->head;
+             Node* prev = new Node;
+             prev = NULL;
+
+             while(curr->next != NULL)
+             {
+                 if(curr->value > curr->next->value)
+                     curr->next = curr->next->next;
+                 else
+                    curr = curr->next;
+             }
+
+             this->reverseLinkedList();
+         }
+
+        void deleteMAfterN(int m, int n)
+        {
+            int flag = 1;
+            int k = 1;
+            Node* ptr = new Node;
+            ptr = head;
+            Node* temp = new Node;
+            while(ptr != NULL)
+            {
+                if(flag == 1)
+                {
+                    if(k == m)
+                    {
+                        flag = 0;
+                        temp = ptr;
+                        ptr = ptr->next;
+                        k = 0;
+                        continue;
+                    }
+                    else
+                    {
+                        ptr = ptr->next;
+                        k++;
+                    }
+                }
+                if(flag == 0)
+                {
+                    if(k == n)
+                    {
+                        ptr = temp->next;
+                        k = 1;
+                        flag = 1;
+                        continue;
+                    }
+                    else
+                    {
+                        temp->next = temp->next->next;
+                        ptr = temp->next;
+                        k++;
+                    }
+                }
+            }
+        }
 };
 
 int main()
@@ -202,6 +290,40 @@ int main()
 
         a->reverseLinkedList();
         a->printLinkedList();
+
+        a->printReverse(a->head);
+        cout<<endl;
+
+        LinkedList* x = new LinkedList;
+        LinkedList* y = new LinkedList;
+        LinkedList* z = new LinkedList;
+
+        x->insertAtHead(8);
+        x->insertAtHead(7);
+        x->insertAtHead(6);
+        x->insertAtHead(5);
+        x->insertAtHead(4);
+        x->insertAtHead(3);
+        x->insertAtHead(2);
+        x->insertAtHead(1);
+
+        x->deleteMAfterN(2, 2);
+        cout<<endl;
+        x->printLinkedList();
+
+        /*y->insertAtHead(8);
+        y->insertAtHead(6);
+        y->insertAtHead(4);
+        y->insertAtHead(2);
+
+        x->printLinkedList();
+        y->printLinkedList();
+
+
+        z->intersectSortedLinkedList(x->head, y->head, z);
+        z->printLinkedList();*/
+
+
 
 
 }
