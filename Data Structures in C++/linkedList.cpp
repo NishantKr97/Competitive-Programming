@@ -263,6 +263,88 @@ class LinkedList
                 }
             }
         }
+
+        void mergeThem(LinkedList* a, int low, int mid, int high)
+        {
+            int l,m,r, i,j, k;
+            int L[mid-low+1], R[high-mid];
+
+            Node* ptr1 = new Node;
+            Node* ptr2 = new Node;
+            ptr1 = this->head;
+            ptr2 = this->head;
+            int t = 0;
+            while(t < low)
+            {
+                ptr1 = ptr1->next;
+                t++;
+            }
+
+            for(i=0;i<mid-low+1;i++)
+            {
+                L[i] = ptr1->value;
+                ptr1 = ptr1->next;
+            }
+
+            ptr2 = ptr1;
+            for(i=0;i<high-mid;i++)
+            {
+                R[i] = ptr2->value;
+                ptr2 = ptr2->next;
+            }
+
+            ptr1 = this->head;
+            t = 0;
+            while(t < low)
+            {
+                ptr1 = ptr1->next;
+            }
+
+            l = low;
+            r = mid+1;
+            for(i=low;i<=high;i++)
+            {
+                if(l == mid-low+1)
+                {
+                    ptr1->value = R[r];
+                    r++;
+                    ptr1 = ptr1->next;
+                    continue;
+                }
+                else if(r == high - mid)
+                {
+                    ptr1->value = L[l];
+                    l++;
+                    ptr1 = ptr1->next;
+                    continue;
+                }
+                if(L[l] < R[r])
+                {
+                    ptr1->value = L[l];
+                    l++;
+                    ptr1 = ptr1->next;
+                    continue;
+                }
+                else if(R[r] <= L[l])
+                {
+                    ptr1->value = R[r];
+                    r++;
+                    ptr1 = ptr1->next;
+                    continue;
+                }
+
+            }
+        }
+
+        void mergeSort(LinkedList* a, int low, int high)
+        {
+            if(low == high)
+                return;
+            int mid = (low + high) / 2;
+            this->mergeSort(a, low, mid);
+            this->mergeSort(a, mid+1, high);
+            this->mergeThem(a, low, mid, high);
+        }
 };
 
 int main()
@@ -298,16 +380,16 @@ int main()
         LinkedList* y = new LinkedList;
         LinkedList* z = new LinkedList;
 
-        x->insertAtHead(8);
-        x->insertAtHead(7);
-        x->insertAtHead(6);
-        x->insertAtHead(5);
-        x->insertAtHead(4);
         x->insertAtHead(3);
+        x->insertAtHead(7);
+        x->insertAtHead(8);
         x->insertAtHead(2);
         x->insertAtHead(1);
+        x->insertAtHead(5);
+        x->insertAtHead(6);
+        x->insertAtHead(4);
 
-        x->deleteMAfterN(2, 2);
+        x->mergeSort(x, 0, 7);
         cout<<endl;
         x->printLinkedList();
 
