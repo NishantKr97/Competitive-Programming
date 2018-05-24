@@ -62,10 +62,22 @@ stack<int> createStack()
     s.push(5);
     s.push(3);
     s.push(9);
+    s.push(4);
     s.push(6);
-    s.push(10);
 
     return s;
+}
+
+
+void printStack(stack<int> s)
+{
+    if(s.empty())
+        return;
+    else{
+        cout<<s.top()<<" ";
+        s.pop();
+        return printStack(s);
+    }
 }
 
 stack<int> insertAtBottom(stack<int> s, int item)
@@ -96,15 +108,31 @@ stack<int> reverseStack(stack<int> s)
     return s;
 }
 
-void printStack(stack<int> s)
+stack<int> insertAtPosition(stack<int> s, int item)
 {
-    if(s.empty())
-        return;
-    else{
-        cout<<s.top()<<" ";
+    if(s.empty() || item > s.top())
+        s.push(item);
+    else
+    {
+        int temp = s.top();
         s.pop();
-        return printStack(s);
+        s = insertAtPosition(s, item);
+
+        s.push(temp);
     }
+    return s;
+}
+stack<int> createSortedStack(stack<int> s)
+{
+    if(!s.empty())
+    {
+        int temp = s.top();
+        s.pop();
+        s = createSortedStack(s);
+
+        s = insertAtPosition(s, temp);
+    }
+    return s;
 }
 
 int main()
@@ -115,11 +143,19 @@ int main()
 
         stack<int> s, r;
         s = createStack();
+
+        // Reversing The Stack
         cout<<"Original Stack : ";
         printStack(s);
         r = reverseStack(s);
         cout<<"\nReversed Stack : ";
         printStack(r);
 
-        //sortStack(s);
+        // Sorting The Stack
+        s = createStack();
+        cout<<"\nUnsorted Stack : ";
+        printStack(s);
+        r = createSortedStack(s);
+        cout<<"\nSorted Stack : ";
+        printStack(r);
 }
