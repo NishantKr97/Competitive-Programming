@@ -79,35 +79,55 @@ class Tree{
             cout<<root->value<<" ";
         }
 
-void inOrderwithoutRec(Node* root)
-{
-    stack<Node*> s;
-    Node* curr = root;
-    s.push(curr);
-    while(1)
+    void inOrderwithoutRec(Node* root)
     {
-        //cout<<curr->value<<endl;
-        if(curr != NULL)
+        stack<Node*> s;
+        Node* curr = root;
+        s.push(curr);
+        while(1)
         {
-            s.push(curr);
-            curr = curr->left;
-            continue;
-        }
-        else
-        {
-            if(!s.empty())
+            if(curr != NULL)
             {
-                curr = s.top();
-                s.pop();
-                cout<<curr->value<<" ";
-                curr = curr->right;
+                s.push(curr);
+                curr = curr->left;
+                continue;
             }
             else
-                break;
+            {
+                if(!s.empty())
+                {
+                    curr = s.top();
+                    s.pop();
+                    cout<<curr->value<<" ";
+                    curr = curr->right;
+                }
+                else
+                    break;
+            }
         }
     }
-}
+
 };
+
+int searchForNextFunc(int in[], int x, int n)
+{
+    for(int i=0;i<n;i++)
+        if(in[i] == x)
+            return i;
+    return -1;
+}
+
+void printPostFromInAndPre(int in[], int pre[], int n)
+{
+    int root = searchForNextFunc(in, pre[0], n);
+
+    if(root != 0)
+            printPostFromInAndPre(in, pre+1, root);
+    if(root != n-1)
+        printPostFromInAndPre(in+root+1, pre+root+1, n-root-1);
+
+    cout<<pre[0]<<" ";
+}
 
 
 int main()
@@ -141,6 +161,15 @@ int main()
     cout<<"\nPostOrder Traversal : ";
     //t->postOrder(root);*/
 
-    t->inOrderwithoutRec(root);
+    // InOrder Traversal Without Recursion
+    //t->inOrderwithoutRec(root);
+
+    // Printing PostOrder using InOrder and PreOrder
+    int in[] = {4,2,5,1,3,6};
+    int pre[] = {1,2,4,5,3,6};
+
+    printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
+
+
 
 }
