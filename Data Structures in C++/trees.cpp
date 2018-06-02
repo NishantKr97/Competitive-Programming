@@ -79,8 +79,36 @@ class Tree{
             cout<<root->value<<" ";
         }
 
-
+void inOrderwithoutRec(Node* root)
+{
+    stack<Node*> s;
+    Node* curr = root;
+    s.push(curr);
+    while(1)
+    {
+        //cout<<curr->value<<endl;
+        if(curr != NULL)
+        {
+            s.push(curr);
+            curr = curr->left;
+            continue;
+        }
+        else
+        {
+            if(!s.empty())
+            {
+                curr = s.top();
+                s.pop();
+                cout<<curr->value<<" ";
+                curr = curr->right;
+            }
+            else
+                break;
+        }
+    }
+}
 };
+
 
 int main()
 {
@@ -98,14 +126,21 @@ int main()
     t->addNode(root, 3);
     t->addNode(root, 4);
     t->addNode(root, 5);
+    t->addNode(root, 6);
+    t->addNode(root, 7);
+    t->addNode(root, 8);
+    t->addNode(root, 9);
+    t->addNode(root, 10);
 
-    cout<<"\nPreOrder Traversal : ";
+    /*cout<<"\nPreOrder Traversal : ";
     //t->preOrder(root);
 
     cout<<"\nInOrder Traversal : ";
     t->inOrder(root);
 
     cout<<"\nPostOrder Traversal : ";
-    //t->postOrder(root);
+    //t->postOrder(root);*/
+
+    t->inOrderwithoutRec(root);
 
 }
