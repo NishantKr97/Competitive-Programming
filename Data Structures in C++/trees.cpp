@@ -1,6 +1,26 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int searchForNextFunc(int in[], int x, int n)
+{
+    for(int i=0;i<n;i++)
+        if(in[i] == x)
+            return i;
+    return -1;
+}
+
+void printPostFromInAndPre(int in[], int pre[], int n)
+{
+    int root = searchForNextFunc(in, pre[0], n);
+
+    if(root != 0)
+            printPostFromInAndPre(in, pre+1, root);
+    if(root != n-1)
+        printPostFromInAndPre(in+root+1, pre+root+1, n-root-1);
+
+    cout<<pre[0]<<" ";
+}
+
 class Node{
     public:
         int value;
@@ -107,27 +127,37 @@ class Tree{
         }
     }
 
+    void reverseLevelOrderTraversal(Node * root)
+    {
+        stack<Node*> s;
+        queue<Node*> q;
+
+        Node* ptr = root;
+        q.push(ptr);
+        while(!q.empty())
+        {
+            ptr = q.front();
+            q.pop();
+
+            s.push(ptr);
+
+            if(ptr->right)
+                q.push(ptr->right);
+
+            if(ptr->left)
+                q.push(ptr->left);
+        }
+
+        while(!s.empty())
+        {
+            //ptr = s.top();
+            cout<<s.top()->value<<" ";
+            s.pop();
+        }
+
+    }
+
 };
-
-int searchForNextFunc(int in[], int x, int n)
-{
-    for(int i=0;i<n;i++)
-        if(in[i] == x)
-            return i;
-    return -1;
-}
-
-void printPostFromInAndPre(int in[], int pre[], int n)
-{
-    int root = searchForNextFunc(in, pre[0], n);
-
-    if(root != 0)
-            printPostFromInAndPre(in, pre+1, root);
-    if(root != n-1)
-        printPostFromInAndPre(in+root+1, pre+root+1, n-root-1);
-
-    cout<<pre[0]<<" ";
-}
 
 
 int main()
@@ -165,11 +195,12 @@ int main()
     //t->inOrderwithoutRec(root);
 
     // Printing PostOrder using InOrder and PreOrder
-    int in[] = {4,2,5,1,3,6};
-    int pre[] = {1,2,4,5,3,6};
 
-    printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
+    //int in[] = {4,2,5,1,3,6};
+    //int pre[] = {1,2,4,5,3,6};
 
+    //printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
 
+    t->reverseLevelOrderTraversal(root);
 
 }
