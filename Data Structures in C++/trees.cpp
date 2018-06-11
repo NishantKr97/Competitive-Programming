@@ -182,6 +182,18 @@ class Tree{
         return maxSum;
     }
 
+    void diagonalSum(Node* root, int level, map<int, int> &v)
+    {
+        if(!root)
+            return ;
+
+        v[level] += root->value;
+
+        diagonalSum(root->right, level, v);
+        diagonalSum(root->left, level+1, v);
+
+    }
+
 };
 
 
@@ -207,26 +219,36 @@ int main()
     t->addNode(root, 9);
     t->addNode(root, 10);
 
-    /*cout<<"\nPreOrder Traversal : ";
-    //t->preOrder(root);
+    cout<<"\nPreOrder Traversal : ";
+    t->preOrder(root);
 
     cout<<"\nInOrder Traversal : ";
     t->inOrder(root);
 
     cout<<"\nPostOrder Traversal : ";
-    //t->postOrder(root);*/
+    t->postOrder(root);*/
 
-    // InOrder Traversal Without Recursion
-    //t->inOrderwithoutRec(root);
+    InOrder Traversal Without Recursion
+    t->inOrderwithoutRec(root);
 
-    // Printing PostOrder using InOrder and PreOrder
+    Printing PostOrder using InOrder and PreOrder
 
-    //int in[] = {4,2,5,1,3,6};
-    //int pre[] = {1,2,4,5,3,6};
+    int in[] = {4,2,5,1,3,6};
+    int pre[] = {1,2,4,5,3,6};
 
-    //printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
+    printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
 
-    //t->reverseLevelOrderTraversal(root);
+    t->reverseLevelOrderTraversal(root);
     cout<<t->maxSumUtil(root);
+
+    map<int, int> v;
+    t->diagonalSum(root, 0, v);
+
+    map<int, int>:: iterator itr;
+    cout<<"Diagonal Sum : \n";
+    for(itr = v.begin();itr!=v.end();itr++)
+        cout<<itr->second<<" ";
+
+
 
 }
