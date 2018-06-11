@@ -157,6 +157,31 @@ class Tree{
 
     }
 
+    void maxSumFunc(Node* root, int sum, int len, int& maxSum, int& maxLen)
+    {
+        if(!root)
+        {
+            if(len >= maxLen){ maxSum = sum; maxLen = len;}
+            return ;
+        }
+
+        maxSumFunc(root->left, sum + root->value, len+1, maxSum, maxLen);
+        maxSumFunc(root->right, sum + root->value, len+1, maxSum, maxLen);
+
+    }
+
+    int maxSumUtil(Node* root)
+    {
+        if(!root)
+            return 0;
+
+        int maxSum = INT_MIN;
+        int maxLen = 0;
+        maxSumFunc(root, 0, 0, maxSum, maxLen);
+
+        return maxSum;
+    }
+
 };
 
 
@@ -201,6 +226,7 @@ int main()
 
     //printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
 
-    t->reverseLevelOrderTraversal(root);
+    //t->reverseLevelOrderTraversal(root);
+    cout<<t->maxSumUtil(root);
 
 }
