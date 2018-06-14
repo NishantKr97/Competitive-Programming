@@ -194,6 +194,43 @@ class Tree{
 
     }
 
+    int maxSumBtwnTwoLeaves(Node* root, int sum, int& maxSum)
+    {
+        if(!root)
+            return 0;
+
+        sum += root->value;
+        if(sum > maxSum)
+            sum = maxSum;
+
+
+        maxSumBtwnTwoLeaves(root->left, root->left->value + sum + root->right->value, maxSum);
+        maxSumBtwnTwoLeaves(root->right,root->left->value + sum + root->right->value, maxSum);
+
+        return sum;
+    }
+
+    int sum(Node* root)
+    {
+        if(!root)
+            return 0;
+        return sum(root->left) + root->value + sum(root->right);
+    }
+
+    int checkSumTree(Node* root)
+    {
+        if(!root || (root->left == NULL && root->right == NULL))
+            return 1;
+
+        int ls =  sum(root->left);
+        int rs =  sum(root->right);
+
+        if(root->value == (ls+rs) && checkSumTree(root->left) && checkSumTree(root->right))
+            return 1;
+
+        return 0;
+
+    }
 };
 
 
@@ -219,36 +256,41 @@ int main()
     t->addNode(root, 9);
     t->addNode(root, 10);
 
-    cout<<"\nPreOrder Traversal : ";
-    t->preOrder(root);
+    /*cout<<"\nPreOrder Traversal : ";
+    //t->preOrder(root);
 
     cout<<"\nInOrder Traversal : ";
     t->inOrder(root);
 
     cout<<"\nPostOrder Traversal : ";
-    t->postOrder(root);*/
+    //t->postOrder(root);*/
 
-    InOrder Traversal Without Recursion
-    t->inOrderwithoutRec(root);
+    // InOrder Traversal Without Recursion
+    //t->inOrderwithoutRec(root);
 
-    Printing PostOrder using InOrder and PreOrder
+    // Printing PostOrder using InOrder and PreOrder
 
-    int in[] = {4,2,5,1,3,6};
-    int pre[] = {1,2,4,5,3,6};
+    //int in[] = {4,2,5,1,3,6};
+    //int pre[] = {1,2,4,5,3,6};
 
-    printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
+    //printPostFromInAndPre(in, pre, sizeof(in)/sizeof(in[0]));
 
-    t->reverseLevelOrderTraversal(root);
-    cout<<t->maxSumUtil(root);
+    //t->reverseLevelOrderTraversal(root);
+    //cout<<t->maxSumUtil(root);
 
-    map<int, int> v;
+    /*map<int, int> v;
     t->diagonalSum(root, 0, v);
 
     map<int, int>:: iterator itr;
     cout<<"Diagonal Sum : \n";
     for(itr = v.begin();itr!=v.end();itr++)
         cout<<itr->second<<" ";
+    */
 
+    //int maxSum = INT_MIN;
+    //cout<<t->maxSumBtwnTwoLeaves(root,0,  maxSum);
+ //   cout<<maxSum<<" ";
 
+    cout<<t->checkSumTree(root);
 
 }
