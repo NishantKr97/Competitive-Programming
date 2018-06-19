@@ -6,6 +6,7 @@ class Node{
         int data;
         Node* left;
         Node* right;
+        Node* parent;
 };
 
 class BST{
@@ -15,24 +16,24 @@ public:
 
 public:
 
-    Node* newNode(int val)
+    Node* newNode(int val, Node* par)
     {
         Node* temp = new Node;
         temp->data = val;
         temp->left = NULL;
         temp->right = NULL;
-
+        temp->parent = par;
         return temp;
     }
 
-    Node* insertNode(Node* root, int val)
+    Node* insertNode(Node* root,Node* parent,  int val)
     {
-        if(root == NULL){ root = newNode(val); return root; }
+        if(root == NULL){ root = newNode(val, parent); return root; }
 
         if(val < root->data)
-            root->left = insertNode(root->left, val);
+            root->left = insertNode(root->left, root,  val);
         else if(val > root->data)
-            root->right = insertNode(root->right, val);
+            root->right = insertNode(root->right, root, val);
         else
             return NULL;
 
@@ -63,6 +64,52 @@ public:
         return b;
     }
 
+    Node* searchElt(Node* root, int key)
+    {
+        if(root == NULL) return NULL;
+        if(root->data == key) return root;
+
+        Node* ptr = new Node;
+        if(root->data > key) ptr = searchElt(root->left, key);
+        if(root->data < key) ptr = searchElt(root->right, key);
+
+        return ptr;
+    }
+
+    Node* findPred(Node* root, int key)
+    {
+        if(root == NULL) return NULL;
+
+        Node* ptr = root->left;
+        while(ptr->right != NULL)
+            ptr = ptr->right;
+
+        return ptr;
+    }
+
+    void deleteNode(Node* root, int key)
+    {
+        Node* ptr = searchElt(root, key);
+        //cout<<ptr->data<<" ";
+
+        if(ptr == NULL) { cout<<"INVALID KEY\n"; return;}
+
+        if(ptr->left == NULL && ptr->right == NULL) { ptr->data = NULL; free(ptr); }
+
+        if(ptr->left != NULL && ptr->right == NULL) {ptr->parent->left == ptr ? ptr->parent->left = ptr->left : ptr->parent->right = ptr->left;}
+        if(ptr->left == NULL && ptr->right != NULL) {ptr->parent->right == ptr ? ptr->parent->right = ptr->right : ptr->parent->left = ptr->right;}
+
+        if(ptr->left != NULL && ptr->right != NULL)
+        {
+            Node* temp = findPred(ptr, key);
+            ptr->data = temp->data;
+            temp->data = NULL;
+            temp->parent->right = NULL;
+            free(temp);
+
+        }
+    }
+
 };
 
 int main()
@@ -74,19 +121,20 @@ int main()
 
     BST* t = new BST;
 
-    t->insertNode(root, 3);
-    t->insertNode(root, 10);
-    t->insertNode(root, 1);
-    t->insertNode(root, 6);
-    t->insertNode(root, 14);
-    t->insertNode(root, 4);
-    t->insertNode(root, 7);
-    t->insertNode(root, 13);
+    t->insertNode(root, NULL, 3);
+    t->insertNode(root, NULL, 10);
+    t->insertNode(root, NULL, 1);
+    t->insertNode(root, NULL, 6);
+    t->insertNode(root, NULL, 14);
+    t->insertNode(root, NULL, 4);
+    t->insertNode(root, NULL, 7);
+    t->insertNode(root, NULL, 13);
 
     t->printBST(root);
 
-    if(t->searchElement(root, 3))
-        cout<<"\nFOUND "<<3<<endl;
-    else
-        cout<<"NOT FOUND\n";
+    t->searchElement(root, 3) ? cout<<"\nFOUND "<<3<<endl : cout<<"NOT FOUND\n";
+
+    t->deleteNode(root, 8);
+    t->printBST(root);
+
 }
