@@ -110,6 +110,20 @@ public:
         }
     }
 
+
+    Node* balancedTree(int arr[], int low, int high)
+    {
+        if(low > high)
+            return NULL;
+
+        int mid = (low + high) / 2;
+        Node* root = newNode(arr[mid], NULL);
+        root->left = balancedTree(arr, low, mid-1);
+        root->right = balancedTree(arr, mid+1, high);
+
+        return root;
+    }
+
 };
 
 int main()
@@ -136,5 +150,14 @@ int main()
 
     t->deleteNode(root, 8);
     t->printBST(root);
+    cout<<endl;
+
+    //New TREE
+    Node* root1 = new Node;
+    BST* t1 = new BST;
+
+    int arr[] = {1,2,3,4,5,6,7,8};
+    root1 = t1->balancedTree(arr, 0, 7);
+    t1->printBST(root1);
 
 }
