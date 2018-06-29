@@ -30,9 +30,9 @@ int findBreakPoint(int *a, int low, int high)
     if(a[mid] > a[mid-1] && a[mid] > a[mid+1])
         return mid;
     else if(a[mid] > a[mid-1] && a[mid] < a[mid+1])
-        findPeak(a, mid+1, high);
+        findBreakPoint(a, mid+1, high);
     else
-        findPeak(a, low, mid-1);
+        findBreakPoint(a, low, mid-1);
 }
 
 int main()
