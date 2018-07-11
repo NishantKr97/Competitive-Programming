@@ -99,7 +99,7 @@ void printEdges(vector<int> adj[], int n)
     }
 }
 
-int checkCycle(vector<int> adj[], int v, int* visited, int* recStack)
+int checkDirectedCycle(vector<int> adj[], int v, int* visited, int* recStack)
 {
     if(visited[v] == 0)
     {
@@ -111,7 +111,7 @@ int checkCycle(vector<int> adj[], int v, int* visited, int* recStack)
         {
             if(recStack[*it] == 1)
                 return 1;
-            else if(checkCycle(adj, *it, visited, recStack))
+            else if(checkDirectedCycle(adj, *it, visited, recStack))
                 return 1;
         }
     }
@@ -119,18 +119,50 @@ int checkCycle(vector<int> adj[], int v, int* visited, int* recStack)
     return 0;
 }
 
-int detectCycle(vector<int> adj[], int n)
+int detectDirectedCycle(vector<int> adj[], int n)
 {
     int visited[n] = {0};
     int recStack[n] = {0};
 
     for(int i=0;i<n;i++)
     {
-        if(checkCycle(adj, i, visited, recStack))
+        if(checkDirectedCycle(adj, i, visited, recStack))
             return 1;
     }
 
     return 0;
+}
+
+int checkUndirectedCycle(vector<int> adj[], int v, int* visited, int parent)
+{
+    if(visited[v] == 0)
+    {
+        visited[v] = 1;
+        vector<int>::iterator it;
+        for(it=adj[v].begin();it != adj[v].end(); it++)
+        {
+            if(visited[*it] == 1 && parent != *it)
+                return 1;
+            else if(checkUndirectedCycle(adj, *it, visited, v))
+                return 1;
+        }
+    }
+    return 0;
+}
+
+int detectUndirectedCycle(vector<int> adj[], int n)
+{
+    int visited[n] = {0};
+
+    for(int i=0;i<n;i++)
+    {
+        if(visited[i] == 0)
+            if(checkUndirectedCycle(adj, i, visited, -1))
+                return 1;
+    }
+
+    return 0;
+
 }
 
 int main()
@@ -170,7 +202,7 @@ int main()
     makeDirected(cyc, 4, 5);
     makeDirected(cyc, 1, 4);
     makeDirected(cyc, 0, 5);
-    cout<<"\nCycle present : "<<detectCycle(cyc, 6);
+    cout<<"\nCycle present(Directed) : "<<detectDirectedCycle(cyc, 6);
 
     vector<int> cyc2[6];
     makeDirected(cyc2, 0, 1);
@@ -180,6 +212,15 @@ int main()
     makeDirected(cyc2, 4, 5);
     makeDirected(cyc2, 0, 5);
     //makeDirected(cyc2, 0, 5);
-    cout<<"\nCycle present : "<<detectCycle(cyc2, 6);
+    cout<<"\nCycle present(Directed) : "<<detectDirectedCycle(tree, 7);
+
+    vector<int> cyc3[5];
+    addEdge(cyc3, 0, 1);
+    addEdge(cyc3, 0, 4);
+    addEdge(cyc3, 1, 2);
+    addEdge(cyc3, 2, 4);
+    addEdge(cyc3, 2, 3);
+     cout<<"\nCycle present(Undirected) : "<<detectUndirectedCycle(cyc3, 5);
+
 
 }

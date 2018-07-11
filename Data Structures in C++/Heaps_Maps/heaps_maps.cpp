@@ -44,4 +44,15 @@ int main ()
         cout<<it->first<<" "<<it->second<<endl;
     }
 
+    map<int, int> m;
+    m.insert(make_pair(4,0));
+    m.insert(make_pair(7,1));
+    m.insert(make_pair(6,2));
+    m.insert(make_pair(10,3));
+    m.insert(make_pair(4,4));
+
+    map<int, int>::iterator itr;
+    for(itr=m.begin();itr!=m.end();itr++)
+        cout<<itr->first<<endl;
+
 }
